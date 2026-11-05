@@ -1,0 +1,38 @@
+/* Semantic tokens from Radix Colors' gray, blue and red scales. */
+:root {
+  color-scheme: light dark;
+  --page: #fcfcfc;
+  --text: #202020;
+  --muted: #646464;
+  --button: #202020;
+  --button-hover: #646464;
+  --button-text: #fcfcfc;
+  --disabled: #f0f0f0;
+  --focus: #0090ff;
+  --error: #ce2c31;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #111111;
+    --text: #eeeeee;
+    --muted: #b4b4b4;
+    --button: #eeeeee;
+    --button-hover: #b4b4b4;
+    --button-text: #111111;
+    --disabled: #222222;
+    --focus: #0090ff;
+    --error: #ff9592;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; width: 320px; background: var(--page); color: var(--text); font: 14px/1.5 system-ui, sans-serif; }
+main { padding: 20px; }
+h1 { margin: 0; font-size: 18px; font-weight: 600; }
+#scope { margin: 4px 0 20px; color: var(--muted); font-size: 12px; }
+button { width: 100%; min-height: 42px; padding: 10px 12px; border: 0; border-radius: 6px; background: var(--button); color: var(--button-text); font: inherit; font-weight: 550; cursor: pointer; }
+button:hover:not(:disabled) { background: var(--button-hover); }
+button:active:not(:disabled) { transform: translateY(1px); }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+button:disabled { background: var(--disabled); color: var(--muted); cursor: default; }
+#status { min-height: 36px; margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+#status[data-error="true"] { color: var(--error); }

@@ -9,7 +9,7 @@ version = manifest["version"]
 output = root / "dist" / f"dia-feishu-title-fix-{version}.zip"
 output.parent.mkdir(exist_ok=True)
 with ZipFile(output, "w", ZIP_DEFLATED) as archive:
-    for name in ("manifest.json", "content.js"):
+    for name in ("manifest.json", "content.js", "tabs.mjs", "popup.html", "popup.css", "popup.mjs"):
         archive.write(root / "extension" / name, name)
     archive.write(root / "LICENSE", "LICENSE")
 print(output)

@@ -1,6 +1,6 @@
 # Dia Feishu Title Fix
 
-**A small browser extension for Dia that restores readable Feishu document titles in tabs.**
+**A browser extension for Dia that fixes Feishu document titles and closes all Feishu tabs on demand.**
 
 [简体中文](README.zh-CN.md) · [Download](https://github.com/FFFergie/dia-feishu-title-fix/releases/latest) · [Report an issue](https://github.com/FFFergie/dia-feishu-title-fix/issues)
 
@@ -18,7 +18,7 @@ This is an independent compatibility workaround for **Dia browser**, not an offi
 
 ## Install in Dia
 
-1. Download `dia-feishu-title-fix-1.0.0.zip` from [Releases](https://github.com/FFFergie/dia-feishu-title-fix/releases/latest).
+1. Download `dia-feishu-title-fix-1.1.0.zip` from [Releases](https://github.com/FFFergie/dia-feishu-title-fix/releases/latest).
 2. Extract it to a permanent folder.
 3. Open `dia://extensions` in **Dia** and enable **Developer mode**.
 4. Choose **Load unpacked** and select the extracted folder containing `manifest.json`.
@@ -28,19 +28,25 @@ New matching pages run the fix automatically. Keep the extracted folder: Dia loa
 
 To install from source, select this repository's `extension/` folder instead. To update, replace the files in the installed folder, click the extension's reload button in Dia, then refresh the document tabs. To uninstall, remove **Dia Feishu Title Fix** from Dia's extensions page.
 
+## Close all Feishu tabs
+
+Open the extension from Dia's toolbar. On first use, choose **Enable one-click close** and grant access to the listed Feishu/Lark sites. Granting access does not close anything. The button then shows the number of matching tabs; click **Close all Feishu tabs (N)** to close them.
+
+This action covers **all windows in the current browser profile, including pinned tabs**, on these HTTPS domains and their subdomains: `feishu.cn`, `feishu.link`, `feishuapp.com`, `larkoffice.com`, and `larksuite.com`. It includes documents, approvals, admin consoles, and apps hosted on these sites. It does not cross profiles, run automatically, or close unrelated pages whose titles happen to mention Feishu. Save unfinished edits before closing tabs. Closed pages can be reopened from browser history.
+
 ## Scope and privacy
 
-- Runs only on HTTPS Feishu document URLs under `*.feishu.cn`, with paths beginning `/base/`, `/docx/`, `/docs/`, `/wiki/`, `/sheets/`, or `/slides/`.
-- Changes only the local page title; it does not rename or edit the document on Feishu.
-- No network requests, telemetry, storage, background process, third-party libraries, or remote code.
-- No additional extension API permissions. The content-script URL matches still grant access to those matching pages; the script uses only the page title and observes the document head.
-- Other domains, including `larksuite.com`, are not covered.
+- Automatic title fixing runs only on HTTPS document URLs under `*.feishu.cn`, with paths beginning `/base/`, `/docx/`, `/docs/`, `/wiki/`, `/sheets/`, or `/slides/`.
+- Title fixing changes only the local page title, not the document on Feishu.
+- Bulk closing requests **optional host permissions** for the five listed domains on first use. Declining leaves title fixing available. Access can be revoked in Dia's extension settings.
+- No broad `tabs` permission, network requests, telemetry, storage, background process, third-party libraries, or remote code. Optional host access allows reading matching tab URLs/titles and access to matching sites; the bulk action only uses tab metadata and tab IDs.
+- Other sites and browser profiles are not included. Automatic title fixing is not enabled on the additional Lark/app domains.
 
 ## Verification and limitations
 
 The title-cleaning behavior was tested in Dia 1.55.1 on macOS with a Feishu Base document: initial navigation, refresh after installation, and repeated title changes. A tenant-scoped build was used for those live checks. The public build uses the same cleaning logic and broadens the URL matches to Feishu subdomains.
 
-Automated tests cover prefix removal, later title changes, convergence, text and emoji preservation, empty titles, URL scope, and the release archive. They are unit/package checks, not a substitute for browser tests. Every document type, other tenants, other Dia versions, browser restart, and Windows have not been individually verified.
+Automated tests cover prefix removal, later title changes, convergence, text and emoji preservation, empty titles, exact domain matching, cross-window selection, permission grant/denial, zero matches, closure results, and the release archive. They are unit/package checks, not a substitute for browser tests. Every document type, other tenants, other Dia versions, browser restart, and Windows have not been individually verified.
 
 ## Development
 
