@@ -85,8 +85,8 @@ import json, pathlib, zipfile
 root = pathlib.Path('.')
 v = json.loads((root/'extension/manifest.json').read_text())['version']
 with zipfile.ZipFile(root/'dist'/f'dia-feishu-title-fix-{v}.zip') as z:
-    assert set(z.namelist()) == {'manifest.json', 'content.js', 'LICENSE'}
-    for name in ('manifest.json', 'content.js'):
+    assert set(z.namelist()) == {'manifest.json', 'content.js', 'tabs.mjs', 'popup.html', 'popup.css', 'popup.mjs', 'LICENSE'}
+    for name in ('manifest.json', 'content.js', 'tabs.mjs', 'popup.html', 'popup.css', 'popup.mjs'):
         assert z.read(name) == (root/'extension'/name).read_bytes()
     assert z.read('LICENSE') == (root/'LICENSE').read_bytes()
 `], { cwd: root });

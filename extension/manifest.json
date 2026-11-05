@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Dia Feishu Title Fix",
-  "version": "1.0.0",
-  "description": "Restore readable Feishu document titles in Dia browser tabs by removing invisible formatting prefixes.",
+  "version": "1.1.0",
+  "description": "Fix Feishu document titles in Dia and close all Feishu tabs on demand.",
   "content_scripts": [
     {
       "matches": [
@@ -18,5 +18,16 @@
       ],
       "run_at": "document_end"
     }
+  ],
+  "action": {
+    "default_title": "Dia Feishu Title Fix",
+    "default_popup": "popup.html"
+  },
+  "optional_host_permissions": [
+    "https://*.feishu.cn/*",
+    "https://*.feishu.link/*",
+    "https://*.feishuapp.com/*",
+    "https://*.larkoffice.com/*",
+    "https://*.larksuite.com/*"
   ]
 }
