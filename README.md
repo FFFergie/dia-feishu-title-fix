@@ -28,11 +28,13 @@ New matching pages run the fix automatically. Keep the extracted folder: Dia loa
 
 To install from source, select this repository's `extension/` folder instead. To update, replace the files in the installed folder, click the extension's reload button in Dia, then refresh the document tabs. To uninstall, remove **Dia Feishu Title Fix** from Dia's extensions page.
 
-## Close all Feishu tabs
+## Close Feishu tabs in one click
 
-Open the extension from Dia's toolbar. On first use, choose **Enable one-click close** and grant access to the listed Feishu/Lark sites. Granting access does not close anything. The button then shows the number of matching tabs; click **Close all Feishu tabs (N)** to close them.
+Open the extension from Dia's toolbar. On first use, choose **Enable one-click close** and grant access to the listed Feishu/Lark sites. Granting access does not close anything. The button then shows the number of matching tabs; click **Close Feishu tabs (N)** to close them.
 
-This action covers **all windows in the current browser profile, including pinned tabs**, on these HTTPS domains and their subdomains: `feishu.cn`, `feishu.link`, `feishuapp.com`, `larkoffice.com`, and `larksuite.com`. It includes documents, approvals, admin consoles, and apps hosted on these sites. It does not cross profiles, run automatically, or close unrelated pages whose titles happen to mention Feishu. Save unfinished edits before closing tabs. Closed pages can be reopened from browser history.
+This action covers tabs exposed by Dia’s extension API across **all windows in the current browser profile, including exposed pinned tabs**, on these HTTPS domains and their subdomains: `feishu.cn`, `feishu.link`, `feishuapp.com`, `larkoffice.com`, and `larksuite.com`. It includes documents, approvals, admin consoles, and apps hosted on these sites. It does not cross profiles, run automatically, or close unrelated pages whose titles happen to mention Feishu. Save unfinished edits before closing tabs. Closed pages can be reopened from browser history.
+
+**Dia limitation (verified in 1.55.1):** some unloaded sidebar entries are absent from the extension tab API. They only become identifiable after you open them. The extension cannot close those entries while they remain unexposed, and a zero count does not mean the entire sidebar is empty.
 
 ## Scope and privacy
 
@@ -43,6 +45,8 @@ This action covers **all windows in the current browser profile, including pinne
 - Other sites and browser profiles are not included. Automatic title fixing is not enabled on the additional Lark/app domains.
 
 ## Verification and limitations
+
+Version 1.1.0 was loaded from the public source in Dia 1.55.1 on macOS. The real toolbar popup displayed two matching tabs, closed both on click, and showed the resulting empty state. A freshly opened Feishu Base document also displayed its corrected title. The unloaded-sidebar limitation above was reproduced by comparing the extension tab list before and after activating a remaining sidebar entry.
 
 The title-cleaning behavior was tested in Dia 1.55.1 on macOS with a Feishu Base document: initial navigation, refresh after installation, and repeated title changes. A tenant-scoped build was used for those live checks. The public build uses the same cleaning logic and broadens the URL matches to Feishu subdomains.
 

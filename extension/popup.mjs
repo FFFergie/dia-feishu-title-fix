@@ -2,18 +2,18 @@ import { HOST_PATTERNS, findFeishuTabs, closeFeishuTabs } from './tabs.mjs';
 
 const zh = navigator.language.toLowerCase().startsWith('zh');
 const words = zh ? {
-  heading: '飞书标签', scope: '当前配置的所有窗口，包含固定标签',
+  heading: '飞书标签', limit: 'Dia 未加载的侧栏标签需先打开。', scope: '当前配置的所有窗口，包含固定标签',
   enable: '启用一键关闭', loading: '正在读取…', closing: '正在关闭…',
-  close: n => `关闭全部飞书标签（${n}）`, empty: '没有飞书标签',
+  close: n => `关闭飞书标签（${n}）`, empty: '没有已加载的飞书标签',
   permission: '首次使用需允许访问飞书相关站点。',
   denied: '未授予权限。标题修复仍正常运行。',
   done: n => `已关闭 ${n} 个标签。`,
   remaining: n => `仍有 ${n} 个飞书标签未关闭。`,
   error: '操作失败，请重新打开插件后重试。',
 } : {
-  heading: 'Feishu tabs', scope: 'All windows in this profile, including pinned tabs',
+  heading: 'Feishu tabs', limit: 'Open unloaded Dia sidebar tabs first to include them.', scope: 'All windows in this profile, including pinned tabs',
   enable: 'Enable one-click close', loading: 'Loading…', closing: 'Closing…',
-  close: n => `Close all Feishu tabs (${n})`, empty: 'No Feishu tabs',
+  close: n => `Close Feishu tabs (${n})`, empty: 'No loaded Feishu tabs',
   permission: 'First use requires access to Feishu-related sites.',
   denied: 'Permission not granted. Title fixing still works.',
   done: n => `Closed ${n} tabs.`,
@@ -26,6 +26,7 @@ let granted = false;
 document.documentElement.lang = zh ? 'zh-CN' : 'en';
 document.querySelector('#heading').textContent = words.heading;
 document.querySelector('#scope').textContent = words.scope;
+document.querySelector('#limit').textContent = words.limit;
 function message(text, error = false) {
   status.textContent = text;
   status.dataset.error = String(error);

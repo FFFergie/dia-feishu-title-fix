@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { HOST_PATTERNS } from '../extension/tabs.mjs';
 let sequence = 0;
 async function mount({ granted = false, allow = true, tabs = [] } = {}) {
-  const nodes = Object.fromEntries(['#heading','#scope','#close-tabs','#status'].map(id => [id, {textContent:'',disabled:true,dataset:{},addEventListener(type,fn){this[type]=fn;}}]));
+  const nodes = Object.fromEntries(['#heading','#scope','#close-tabs','#status','#limit'].map(id => [id, {textContent:'',disabled:true,dataset:{},addEventListener(type,fn){this[type]=fn;}}]));
   let permission = granted, removed = 0, requests = 0;
   globalThis.document = {documentElement:{},querySelector:id=>nodes[id]};
   Object.defineProperty(globalThis,'navigator',{value:{language:'zh-CN'},configurable:true});
@@ -20,7 +20,7 @@ test('first use requests permission without closing tabs', async()=>{
   assert.equal(ui.nodes['#close-tabs'].textContent,'启用一键关闭');
   await ui.click();
   assert.equal(ui.requests,1);assert.equal(ui.removed,0);
-  assert.equal(ui.nodes['#close-tabs'].textContent,'关闭全部飞书标签（1）');
+  assert.equal(ui.nodes['#close-tabs'].textContent,'关闭飞书标签（1）');
   await ui.click();
   assert.equal(ui.removed,1);assert.equal(ui.requests,1);
   assert.equal(ui.nodes['#status'].textContent,'已关闭 1 个标签。');
@@ -32,7 +32,7 @@ test('permission denial leaves a retry button and closes nothing', async()=>{
 });
 test('empty state disables closing without asking for permission again', async()=>{
   const ui=await mount({granted:true});
-  assert.equal(ui.nodes['#close-tabs'].textContent,'没有飞书标签');
+  assert.equal(ui.nodes['#close-tabs'].textContent,'没有已加载的飞书标签');
   assert.equal(ui.nodes['#close-tabs'].disabled,true);assert.equal(ui.requests,0);
 });
 test('optional host permissions exactly match tab detection scope',()=>{
