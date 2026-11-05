@@ -1,0 +1,22 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Verify tag and manifest versions
+        run: node -e 'const m=require("./extension/manifest.json"); if(process.env.GITHUB_REF_NAME !== `v${m.version}`) process.exit(1)'
+      - run: npm run check
+      - run: npm test
+      - name: Publish extension ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --verify-tag --title "Dia Feishu Title Fix $GITHUB_REF_NAME" --notes-file CHANGELOG.md

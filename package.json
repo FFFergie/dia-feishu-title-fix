@@ -1,0 +1,15 @@
+{
+  "name": "dia-feishu-title-fix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Feishu document title compatibility fix for Dia browser",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check extension/content.js",
+    "package": "python3 scripts/package.py"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
